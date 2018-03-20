@@ -33,7 +33,7 @@ void button_changed(int pin, int v)
       digitalWrite(LED1, 1);
     }
   }
-  if (pin == KEY2) {
+  else if (pin == KEY2) {
     if (!v) {
       if (now < last_pressedd[1] + 500) {
         digitalWrite(LED4, 1);
@@ -46,7 +46,7 @@ void button_changed(int pin, int v)
       last_pressedd[0] = now;
     }
   }
-  if (pin == KEY3) {
+  else if (pin == KEY3) {
     if (!v) {
       if (now < last_pressedd[0] + 500) {
         digitalWrite(LED4, 1);
