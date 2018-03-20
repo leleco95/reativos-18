@@ -13,15 +13,12 @@ void button_listen(int pin)
   //e indicar o interesse nele
   if (pin == KEY1) {
     interesse_botao[0] = 1;
-    pinMode(KEY1, INPUT_PULLUP);
   }
   else if (pin == KEY2) {
     interesse_botao[1] = 1;
-    pinMode(KEY2, INPUT_PULLUP);
   }
   else if (pin == KEY3) {
     interesse_botao[2] = 1;
-    pinMode(KEY3, INPUT_PULLUP);
   }
 }
 
@@ -54,6 +51,10 @@ void setup() {
     last_pressed[i] = now;
     last_state[i] = 1;
   }
+  
+  pinMode(KEY1, INPUT_PULLUP);
+  pinMode(KEY2, INPUT_PULLUP);
+  pinMode(KEY3, INPUT_PULLUP);
   
   //inicializa aplicacao
   appinit();
