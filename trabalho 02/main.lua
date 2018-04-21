@@ -61,6 +61,9 @@ end
 
 function love.mousepressed(x, y, button)
   if button == 1 then
-    table.insert(towers, tower.new(x, y, 1))
+    newTower = tower.new(x, y, 1)
+    if not map.checkCollision(x, y, newTower.radius) then
+      table.insert(towers, tower.new(x, y, 1))
+    end
   end
 end

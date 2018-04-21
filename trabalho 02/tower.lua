@@ -1,6 +1,7 @@
 projectile = require "projectile"
 
 local function new(x, y, category)
+  local radius = 10
 
   local function findEnemyInRange(self)
     for _, enemy in pairs(enemies) do
@@ -32,7 +33,7 @@ local function new(x, y, category)
     love.graphics.setColor(255, 0, 0, 100)
     love.graphics.circle("fill", x, y, 70)
     love.graphics.setColor(255, 0, 0)
-    love.graphics.circle("fill", x, y, 10)
+    love.graphics.circle("fill", x, y, radius)
     love.graphics.setColor(255, 255, 255)
   end
 
@@ -47,6 +48,7 @@ local function new(x, y, category)
   return {
     getX = getX,
     getY = getY,
+    radius = radius,
     actionTime = 0,
     findEnemyInRange = findEnemyInRange,
     attack = attack,
