@@ -3,6 +3,7 @@ local function new(category)
   local y = 0
   local speedX = 0
   local speedY = 2
+  local radius = 10
 
   local function move()
     y = y + speedY
@@ -22,13 +23,22 @@ local function new(category)
 
   local function draw(self)
     love.graphics.setColor(0, 0, 255)
-    love.graphics.circle("fill", x, y, 10)
+    love.graphics.circle("fill", x, y, radius)
     love.graphics.setColor(255, 255, 255)
   end
 
+  local function getX()
+    return x
+  end
+
+  local function getY()
+    return y
+  end
+
   return {
-    x = x,
-    y = y,
+    getX = getX,
+    getY = getY,
+    radius = radius,
     category = category,
     update = coroutine.wrap(update),
     draw = draw,

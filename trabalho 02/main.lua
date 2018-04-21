@@ -1,11 +1,13 @@
 local player = require "player"
 local enemy = require "enemy"
 local tower = require "tower"
+local projectile = require "projectile"
 local map = require "map"
 
 function love.load()
   towers = {}
   enemies = {}
+  projectiles = {}
 end
 
 function love.draw()
@@ -18,6 +20,13 @@ function love.draw()
   for k,v in pairs(enemies) do
     v:draw()
   end
+
+  for i=1, #projectiles do
+    projectiles[i].draw()
+  end
+  -- for k,v in pairs(projectiles) do
+  --   v:draw()
+  -- end
 end
 
 function love.update(dt)
@@ -25,11 +34,21 @@ function love.update(dt)
   for k,v in pairs(enemies) do
     v:update()
   end
+
+  for i=#projectiles, 1, -1 do
+    projectiles[i].update(i)
+  end
+
 end
 
 function love.keypressed(key)
   if key == '1' then
     table.insert(enemies, enemy.new(100))
+  end
+  if key == '2' then
+    local asdf = enemy.new(100)
+    table.insert(enemies, asdf)
+    table.insert(projectiles, projectile.new(50, 50, asdf))
   end
 end
 
