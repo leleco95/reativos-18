@@ -38,8 +38,18 @@ local function new(x, y, target)
     love.graphics.circle("fill", x, y, radius)
     love.graphics.setColor(255, 255, 255)
   end
+  
+  local function getX()
+    return x
+  end
+  
+  local function getY()
+    return y
+  end
 
   return {
+    getX = getX,
+    getY = getY,
     update = coroutine.wrap(update),
     draw = draw
   }

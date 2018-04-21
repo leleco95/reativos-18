@@ -5,11 +5,11 @@ end
 
 function isInRange(tower, enemy)
   --tower category defines its range
-  local towerRange = towerCategory
+  local towerRange = 70
   --enemy category defines its size
-  local enemySize = enemyCategory
+  local enemySize = 10
 
-  return circleCollision(tower.x, tower.y, towerRange, enemy.x, enemy.y, enemySize)
+  return circleCollision(tower.x, tower.y, towerRange, enemy.getX(), enemy.getY(), enemySize)
 end
 
 function circleCollision(x, y, radius, x2, y2, radius2)

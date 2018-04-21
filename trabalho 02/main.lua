@@ -4,6 +4,10 @@ local tower = require "tower"
 local projectile = require "projectile"
 local map = require "map"
 
+function love.conf(t)
+  t.console = true
+end
+
 function love.load()
   towers = {}
   enemies = {}
@@ -23,6 +27,7 @@ function love.draw()
 
   for i=#projectiles, 1, -1 do
     projectiles[i].draw()
+    love.graphics.print("x: ".. projectiles[i].getX() .. "\ty: " .. projectiles[i].getY(), 0, 0)
   end
   -- for k,v in pairs(projectiles) do
   --   v:draw()
@@ -55,6 +60,7 @@ end
 function love.mousepressed(x, y, button)
   if button == 1 then
     table.insert(towers, tower.new(x, y, 1))
+    print("nova torre")
   end
 end
 
