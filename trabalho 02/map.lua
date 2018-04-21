@@ -4,25 +4,49 @@ map.startY = 0
 map.width = 25
 map.height = 25
 map.destinations = {
-  {x = 425, y = 300},
-  {x = 500, y = 300},
-  {x = 500, y = love.graphics.getHeight()},
+  {x = 425, y = love.graphics.getHeight()-100},
+  {x = 600, y = love.graphics.getHeight()-100},
+  {x = 600, y = 300},
 }
 
 function map.draw()
   local x = map.startX
   local y = map.startY
 
-  for i=1, #map.destinations-1 do
-    local width = x - map.destinations[i].x
-    local height = y - map.destinations[i].y
-    love.graphics.rectangle("fill", x - map.width, y - map.height, width, height)
+  for i=1, #map.destinations do
+    local width = 0
+    local height = 0
 
-    x = map.destinations[i+1].x
-    y = map.destinations[i+1].y
+    if(x < map.destinations[i].x) then
+      x = x - map.width
+      width = map.destinations[i].x - x + map.width
+    elseif(x > map.destinations[i].x) then
+      width = map.destinations[i].x - x
+      x = x - map.width + width
+      width = map.width*2 - width
+    else
+      width = map.width * 2
+      x = x - map.width
+    end
+
+    if(y < map.destinations[i].y) then
+      y = y - map.height
+      height = map.destinations[i].y - y + map.height
+    elseif(y > map.destinations[i].y) then
+      height = map.destinations[i].y - y
+      y = y - map.height + height
+      height = map.height*2 - height
+    else
+      height = map.height * 2
+      y = y - map.height
+    end
+
+    love.graphics.rectangle("fill", x, y, width, height)
+
+    x = map.destinations[i].x
+    y = map.destinations[i].y
   end
 
-  -- love.graphics.rectangle("fill", map.startX - 25, map.startY, 50, love.graphics.getHeight())
 end
 
 function map.checkCollision(x, y, radius)
