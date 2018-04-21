@@ -3,6 +3,12 @@ require "general"
 
 function tower.newTower(x, y, category)
 
+  local function attack(self)
+    for _, enemy in pairs(enemies) do
+      isInRange(self, enemy)
+    end
+  end
+
   local function update(self)
     while true do
       if hit(x, y, category) then
@@ -10,6 +16,7 @@ function tower.newTower(x, y, category)
       else
         wait(0, self)
       end
+      coroutine.yield()
     end
   end
 
@@ -20,7 +27,7 @@ function tower.newTower(x, y, category)
   end
 
   return {
-    update = update,
+    update = coroutine.wrap(update),
     draw = draw,
   }
 end

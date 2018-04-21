@@ -3,15 +3,16 @@ function wait(time, object)
   coroutine.yield()
 end
 
-function checkHit(towerX, towerY, towerCategory, enemyX, enemyY, enemyCategory)
+function isInRange(tower, enemy)
   --tower category defines its range
   local towerRange = towerCategory
   --enemy category defines its size
   local enemySize = enemyCategory
-  circleCollision(towerX, towerY, towerRange, enemyX, enemyY, enemySize)
+
+  return circleCollision(tower.x, tower.y, towerRange, enemy.x, enemy.y, enemySize)
 end
 
-function circleCollision(circleOneX, circleOneY, circleOneR, circleTwoX, circleTwoY, circleTwoR)
-  local distance = math.sqrt( (circleOneX - circleTwoX)^2 + (circleOneY - circleTwoY)^2)
-  return distance < circleOneR + circleTwoR
+function circleCollision(x, y, radius, x2, y2, radius2)
+  local distance = math.sqrt((x - x2)^2 + (y - y2)^2)
+  return distance < radius + radius2
 end
