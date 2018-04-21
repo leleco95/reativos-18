@@ -1,5 +1,4 @@
 projectile = require "projectile"
-require "general"
 
 local function new(x, y, category)
 
@@ -21,6 +20,7 @@ local function new(x, y, category)
       enemy = self:findEnemyInRange()
       if enemy then
         self.attack(enemy)
+        --change tower attack speed
         wait(category/2, self)
       else
         wait(0, self)
@@ -47,6 +47,7 @@ local function new(x, y, category)
   return {
     getX = getX,
     getY = getY,
+    actionTime = 0,
     findEnemyInRange = findEnemyInRange,
     attack = attack,
     update = coroutine.wrap(update),

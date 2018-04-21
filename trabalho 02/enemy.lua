@@ -4,6 +4,9 @@ local function new(category)
   local speedX = 0
   local speedY = 2
   local radius = 10
+  
+  local health = 3
+  local alive = true
 
   local function move()
     y = y + speedY
@@ -13,15 +16,22 @@ local function new(category)
       y = 0
     end
   end
-
-  local function update(self)
-    while true do
-      move()
-      coroutine.yield()
+  
+  local function checkAlive(index)
+    if not alive then
+      table.remove(enemies, index)
     end
   end
 
-  local function draw(self)
+  local function update()
+    while true do
+      move()
+      index = coroutine.yield()
+      checkAlive(index)
+    end
+  end
+
+  local function draw()
     love.graphics.setColor(0, 0, 255)
     love.graphics.circle("fill", x, y, radius)
     love.graphics.setColor(255, 255, 255)
@@ -34,6 +44,13 @@ local function new(category)
   local function getY()
     return y
   end
+  
+  local function takeDamage(damage)
+    health = health - damage
+    if health <= 0 then
+      alive = false
+    end
+  end
 
   return {
     getX = getX,
@@ -42,6 +59,7 @@ local function new(category)
     category = category,
     update = coroutine.wrap(update),
     draw = draw,
+    takeDamage = takeDamage,
   }
 end
 

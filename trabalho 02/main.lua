@@ -3,6 +3,7 @@ local enemy = require "enemy"
 local tower = require "tower"
 local projectile = require "projectile"
 local map = require "map"
+require "general"
 
 function love.conf(t)
   t.console = true
@@ -22,7 +23,7 @@ function love.draw()
   end
 
   for k,v in pairs(enemies) do
-    v:draw()
+    v.draw()
   end
 
   for i=#projectiles, 1, -1 do
@@ -34,13 +35,16 @@ function love.draw()
 end
 
 function love.update(dt)
-  --enemy.spawner()
-  for k,v in pairs(enemies) do
-    v:update()
-  end
-
+  local now = love.timer.getTime()
+  
   for k,v in pairs(towers) do
-    v:update()
+    if now >= v.actionTime then
+      v:update()
+    end
+  end
+  
+  for k,v in pairs(enemies) do
+    v.update(k)
   end
 
   for i=#projectiles, 1, -1 do
@@ -58,11 +62,5 @@ end
 function love.mousepressed(x, y, button)
   if button == 1 then
     table.insert(towers, tower.new(x, y, 1))
-  end
-end
-
-function hit(x, y, category)
-  for k,v in pairs(enemies) do
-    checkHit(x, y, category, v.x, v.y, v.category)
   end
 end

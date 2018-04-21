@@ -21,6 +21,7 @@ local function new(x, y, target)
   local function checkCollision(index)
     if(circleCollision(x, y, radius, target.getX(), target.getY(), target.radius)) then
       table.remove(projectiles, index)
+      target.takeDamage(1)
     end
   end
 
