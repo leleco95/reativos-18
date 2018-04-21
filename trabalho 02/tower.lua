@@ -1,7 +1,6 @@
-local tower = {}
 require "general"
 
-function tower.newTower(x, y, category)
+local function new(x, y, category)
 
   local function attack(self)
     for _, enemy in pairs(enemies) do
@@ -32,4 +31,6 @@ function tower.newTower(x, y, category)
   }
 end
 
-return tower
+return {
+  new = new
+}

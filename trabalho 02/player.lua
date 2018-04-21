@@ -1,6 +1,6 @@
-local player = {}
-
-function player.newPlayer()
+function new()
 end
 
-return player
+return {
+  new = new
+}

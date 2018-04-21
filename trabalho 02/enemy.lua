@@ -1,6 +1,4 @@
-local enemy = {}
-
-function enemy.newEnemy(category)
+local function new(category)
   local x = 425
   local y = 0
   local speedX = 0
@@ -9,7 +7,7 @@ function enemy.newEnemy(category)
   local function move()
     y = y + speedY
     x = x + speedX
-    
+
     if y > love.graphics.getHeight() then
       y = 0
     end
@@ -37,12 +35,13 @@ function enemy.newEnemy(category)
   }
 end
 
-enemy.spawner = coroutine.wrap(
-  function()
-    while true do
-      --todo
-    end
+local function spawner()
+  while true do
+    --todo
   end
-)
+end
 
-return enemy
+return {
+  new = new,
+  spawner = coroutine.wrap(spawner)
+}

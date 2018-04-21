@@ -29,13 +29,13 @@ end
 
 function love.keypressed(key)
   if key == '1' then
-    table.insert(enemies, enemy.newEnemy(100))
+    table.insert(enemies, enemy.new(100))
   end
 end
 
 function love.mousepressed(x, y, button)
   if button == 1 then
-    table.insert(towers, tower.newTower(x, y, 1))
+    table.insert(towers, tower.new(x, y, 1))
   end
 end
 
