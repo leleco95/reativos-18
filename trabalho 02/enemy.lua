@@ -1,26 +1,36 @@
 local enemy = {}
 
 function enemy.newEnemy(category)
+  local x = 425
+  local y = 0
+  local speedX = 0
+  local speedY = 2
+
+  local function move()
+    y = y + speedY
+    x = x + speedX
+    
+    if y > love.graphics.getHeight() then
+      y = 0
+    end
+  end
 
   local function update(self)
     while true do
-      self.y = self.y + 2
-      if self.y > 600 then
-        self.y = 0
-      end
+      move()
       coroutine.yield()
     end
   end
 
   local function draw(self)
     love.graphics.setColor(0, 0, 255)
-    love.graphics.circle("fill", self.x, self.y, 10)
+    love.graphics.circle("fill", x, y, 10)
     love.graphics.setColor(255, 255, 255)
   end
 
   return {
-    x = 425,
-    y = 0,
+    x = x,
+    y = y,
     category = category,
     update = coroutine.wrap(update),
     draw = draw,

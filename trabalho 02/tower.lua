@@ -3,7 +3,7 @@ require "general"
 
 function tower.newTower(x, y, category)
 
-  local function fire(self)
+  local function update(self)
     while true do
       if hit(x, y, category) then
         wait(category/2, self)
@@ -20,7 +20,7 @@ function tower.newTower(x, y, category)
   end
 
   return {
-    fire = fire,
+    update = update,
     draw = draw,
   }
 end
