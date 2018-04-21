@@ -1,6 +1,8 @@
 map = {}
 map.startX = 425
 map.startY = 0
+map.width = 25
+map.height = 25
 map.destinations = {
   {x = 425, y = 300},
   {x = 500, y = 300},
@@ -8,14 +10,22 @@ map.destinations = {
 }
 
 function map.draw()
-  love.graphics.rectangle("fill", map.startX - 25, map.startY, 50, love.graphics.getHeight())
+  local x = map.startX
+  local y = map.startY
+
+  for i=1, #map.destinations-1 do
+    local width = x - map.destinations[i].x
+    local height = y - map.destinations[i].y
+    love.graphics.rectangle("fill", x - map.width, y - map.height, width, height)
+
+    x = map.destinations[i+1].x
+    y = map.destinations[i+1].y
+  end
+
+  -- love.graphics.rectangle("fill", map.startX - 25, map.startY, 50, love.graphics.getHeight())
 end
 
 function map.checkCollision(x, y, radius)
-  return circleCollision(map.startX, y, 25, x, y, radius)
-end
-
-function map.checkCollision2(x, y, radius)
 
   -- for i=1,#destinations do
     local pointX = math.max(400, x)
@@ -23,10 +33,6 @@ function map.checkCollision2(x, y, radius)
 
     local pointY = math.max(0, y)
     pointY = math.min(love.graphics.getHeight(), pointY)
-
-    print("===")
-    print(x, y)
-    print(pointX, pointY)
 
     if circleCollision(pointX, pointY, 1, x, y, radius) then
       return true
