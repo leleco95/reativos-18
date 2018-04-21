@@ -9,7 +9,7 @@ function isInRange(tower, enemy)
   --enemy category defines its size
   local enemySize = 10
 
-  return circleCollision(tower.x, tower.y, towerRange, enemy.getX(), enemy.getY(), enemySize)
+  return circleCollision(tower.getX(), tower.getY(), towerRange, enemy.getX(), enemy.getY(), enemySize)
 end
 
 function circleCollision(x, y, radius, x2, y2, radius2)

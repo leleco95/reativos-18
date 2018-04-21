@@ -4,7 +4,6 @@ local function new(x, y, target)
   local radius = 2
 
   local function move()
-    print(x, y, target.getX(), target.getY())
 
     if(x < target.getX()) then
       x = x + speedX
@@ -38,11 +37,11 @@ local function new(x, y, target)
     love.graphics.circle("fill", x, y, radius)
     love.graphics.setColor(255, 255, 255)
   end
-  
+
   local function getX()
     return x
   end
-  
+
   local function getY()
     return y
   end

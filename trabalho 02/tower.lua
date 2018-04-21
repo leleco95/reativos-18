@@ -11,7 +11,7 @@ local function new(x, y, category)
     end
     return nil
   end
-  
+
   local function attack(enemy)
     table.insert(projectiles, projectile.new(x, y, enemy))
   end
@@ -36,7 +36,17 @@ local function new(x, y, category)
     love.graphics.setColor(255, 255, 255)
   end
 
+  local function getX()
+    return x
+  end
+
+  local function getY()
+    return y
+  end
+
   return {
+    getX = getX,
+    getY = getY,
     findEnemyInRange = findEnemyInRange,
     attack = attack,
     update = coroutine.wrap(update),
