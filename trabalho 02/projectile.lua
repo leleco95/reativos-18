@@ -25,10 +25,12 @@ local function new(x, y, target)
     end
   end
 
-  local function update(index)
-
-    checkCollision(index)
-    move()
+  local function update()
+    while true do
+      local index = coroutine.yield()
+      checkCollision(index)
+      move()
+    end
   end
 
   local function draw()
@@ -38,7 +40,7 @@ local function new(x, y, target)
   end
 
   return {
-    update = update,
+    update = coroutine.wrap(update),
     draw = draw
   }
 end

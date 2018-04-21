@@ -21,7 +21,7 @@ function love.draw()
     v:draw()
   end
 
-  for i=1, #projectiles do
+  for i=#projectiles, 1, -1 do
     projectiles[i].draw()
   end
   -- for k,v in pairs(projectiles) do
