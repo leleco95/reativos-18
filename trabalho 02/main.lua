@@ -10,6 +10,7 @@ function love.load()
   towers = {}
   enemies = {}
   projectiles = {}
+  map.generateRectangles()
 end
 
 function love.draw()

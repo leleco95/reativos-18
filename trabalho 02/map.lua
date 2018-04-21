@@ -9,7 +9,9 @@ map.destinations = {
   {x = 600, y = 300},
 }
 
-function map.draw()
+function map.generateRectangles()
+  map.rectangles = {}
+  
   local x = map.startX
   local y = map.startY
 
@@ -41,27 +43,32 @@ function map.draw()
       y = y - map.height
     end
 
-    love.graphics.rectangle("fill", x, y, width, height)
+    table.insert(map.rectangles, {x = x, y = y, width = width, height = height})
 
     x = map.destinations[i].x
     y = map.destinations[i].y
   end
+end
 
+function map.draw()
+  for _,v in ipairs(map.rectangles) do
+    love.graphics.rectangle("fill", v.x, v.y, v.width, v.height)
+  end
 end
 
 function map.checkCollision(x, y, radius)
 
-  -- for i=1,#destinations do
-    local pointX = math.max(400, x)
-    pointX = math.min(450, pointX)
+  for _,v in ipairs(map.rectangles) do
+    local pointX = math.max(v.x, x)
+    pointX = math.min(v.x + v.width, pointX)
 
-    local pointY = math.max(0, y)
-    pointY = math.min(love.graphics.getHeight(), pointY)
+    local pointY = math.max(v.y, y)
+    pointY = math.min(v.y + v.height, pointY)
 
     if circleCollision(pointX, pointY, 1, x, y, radius) then
       return true
     end
-  -- end
+  end
 
   return false
 end
