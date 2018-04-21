@@ -1,15 +1,12 @@
+require "map"
+require "general"
 local player = require "player"
 local enemy = require "enemy"
-local tower = require "tower"
 local projectile = require "projectile"
-local map = require "map"
-require "general"
-
-function love.conf(t)
-  t.console = true
-end
 
 function love.load()
+  debug = true
+
   towers = {}
   enemies = {}
   projectiles = {}
@@ -29,20 +26,17 @@ function love.draw()
   for i=#projectiles, 1, -1 do
     projectiles[i].draw()
   end
-  -- for k,v in pairs(projectiles) do
-  --   v:draw()
-  -- end
 end
 
 function love.update(dt)
   local now = love.timer.getTime()
-  
+
   for k,v in pairs(towers) do
     if now >= v.actionTime then
       v:update()
     end
   end
-  
+
   for k,v in pairs(enemies) do
     v.update(k)
   end
@@ -60,10 +54,8 @@ function love.keypressed(key)
 end
 
 function love.mousepressed(x, y, button)
+  --button == "l" --version < 0.10
   if button == 1 then
-    newTower = tower.new(x, y, 1)
-    if not map.checkCollision(x, y, newTower.radius) then
-      table.insert(towers, tower.new(x, y, 1))
-    end
+    player.createTower(x, y)
   end
 end
