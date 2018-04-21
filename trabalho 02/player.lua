@@ -12,7 +12,7 @@ local function collideAgainstOthersTowers(tower)
 end
 
 local function collideWithMap(tower)
-  return map.checkCollision(tower.getX(), tower.getY(), tower.radius)
+  return map.checkCollision2(tower.getX(), tower.getY(), tower.radius)
 end
 
 local function createTower(x, y)
