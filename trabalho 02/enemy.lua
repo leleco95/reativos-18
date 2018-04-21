@@ -1,19 +1,50 @@
 local function new(category)
-  local x = 425
-  local y = 0
-  local speedX = 0
+  local x = map.startX
+  local y = map.startY
+  local speedX = 2
   local speedY = 2
   local radius = 10
   
   local health = 3
   local alive = true
+  local destinationIndex = 1
 
-  local function move()
-    y = y + speedY
-    x = x + speedX
+  local function move(index)
+    local destination = map.destinations[destinationIndex]
+    
+    local directionX = 0
+    if(x < destination.x) then
+      directionX = 1
+    elseif(x > destination.x) then
+      directionX = -1
+    end
+    
+    local distance = math.abs(destination.x - x)
+    if speedX > distance then
+      x = x + distance * directionX
+    else
+      x = x + speedX * directionX
+    end
 
-    if y > love.graphics.getHeight() then
-      y = 0
+    local directionY = 0
+    if(y < destination.y) then
+      directionY = 1
+    elseif(y > destination.y) then
+      directionY = -1
+    end
+    
+    distance = math.abs(destination.y - y)
+    if speedY > distance then
+      y = y + distance * directionY
+    else
+      y = y + speedY * directionY
+    end
+
+    if circleCollision(x, y, 1, destination.x, destination.y, 1) then
+      destinationIndex = destinationIndex + 1
+      if destinationIndex > #map.destinations then
+        table.remove(enemies, index)
+      end
     end
   end
   
@@ -25,7 +56,7 @@ local function new(category)
 
   local function update()
     while true do
-      move()
+      move(index)
       index = coroutine.yield()
       checkAlive(index)
     end
