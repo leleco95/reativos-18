@@ -1,4 +1,4 @@
-local function new(x, y, target)
+local function new(x, y, target, damage)
   local speedX = 7
   local speedY = 7
   local radius = 3
@@ -37,7 +37,7 @@ local function new(x, y, target)
   local function checkCollision(index)
     if(circleCollision(x, y, radius, target.getX(), target.getY(), target.radius)) then
       table.remove(projectiles, index)
-      target.takeDamage(1)
+      target.takeDamage(damage)
     end
   end
 

@@ -4,6 +4,7 @@ local player = require "player"
 local enemy = require "enemy"
 local projectile = require "projectile"
 local spawner = require "spawner"
+local towerCategories = require "towerCategory"
 
 function love.load()
   debug = true
@@ -56,11 +57,9 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
-  if key == '1' then
-    player.setSelectedTower(1)
-  end
-  if key == '2' then
-    player.setSelectedTower(2)
+  key = tonumber(key)
+  if key and key <= #towerCategories.range then
+    player.setSelectedTower(key)
   end
 end
 
