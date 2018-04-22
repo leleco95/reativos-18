@@ -2,30 +2,30 @@ projectile = require "projectile"
 
 local function new(x, y, category)
   local radius = 10
+  local range = 70
 
-  local function findEnemyInRange(self)
+  local function findEnemyInRange()
     for _, enemy in pairs(enemies) do
-      if isInRange(self, enemy) then
+      if circleCollision(x, y, range, enemy.getX(), enemy.getY(), enemy.radius) then
         return enemy
       end
     end
     return nil
   end
 
-  local function attack(enemy)
-    table.insert(projectiles, projectile.new(x, y, enemy))
+  local function attack(self, enemy)
+    if enemy then
+      table.insert(projectiles, projectile.new(x, y, enemy))
+      wait(category/2, self)
+    else
+      wait(0, self)
+    end
   end
 
   local function update(self)
     while true do
-      enemy = self:findEnemyInRange()
-      if enemy then
-        self.attack(enemy)
-        --change tower attack speed
-        wait(category/2, self)
-      else
-        wait(0, self)
-      end
+      enemy = findEnemyInRange()
+      self:attack(enemy)
     end
   end
 
@@ -53,6 +53,7 @@ local function new(x, y, category)
     getX = getX,
     getY = getY,
     radius = radius,
+    range = range,
     actionTime = 0,
     findEnemyInRange = findEnemyInRange,
     attack = attack,

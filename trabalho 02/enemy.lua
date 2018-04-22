@@ -57,6 +57,7 @@ local function new(category)
   end
 
   local function update()
+    local index = nil
     while true do
       move(index)
       index = coroutine.yield()
