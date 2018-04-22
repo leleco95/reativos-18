@@ -1,20 +1,36 @@
 local function new(x, y, target)
-  local speedX = 10
-  local speedY = 10
+  local speedX = 7
+  local speedY = 7
   local radius = 2
 
   local function move()
 
+    local directionX = 0
     if(x < target.getX()) then
-      x = x + speedX
+      directionX = 1
     elseif(x > target.getX()) then
-      x = x - speedX
+      directionX = -1
     end
 
+    local distance = math.abs(target.getX() - x)
+    if speedX > distance then
+      x = x + distance * directionX
+    else
+      x = x + speedX * directionX
+    end
+
+    local directionY = 0
     if(y < target.getY()) then
-      y = y + speedY
+      directionY = 1
     elseif(y > target.getY()) then
-      y = y - speedY
+      directionY = -1
+    end
+
+    distance = math.abs(target.getY() - y)
+    if speedY > distance then
+      y = y + distance * directionY
+    else
+      y = y + speedY * directionY
     end
   end
 
