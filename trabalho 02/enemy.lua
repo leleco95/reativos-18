@@ -3,11 +3,11 @@ local categories = require "category"
 local function new(category)
   local x = map.startX
   local y = map.startY
-  local speedX = categories.speedX[category] or categories.speedX[1]
-  local speedY = categories.speedY[category] or categories.speedY[1]
-  local radius = categories.radius[category] or categories.radius[1]
+  local speedX = categories.speedX[category] or categories.speedX[#categories.speedX]
+  local speedY = categories.speedY[category] or categories.speedY[#categories.speedY]
+  local radius = categories.radius[category] or categories.radius[#categories.radius]
 
-  local health = categories.health[category] or categories.health[1]
+  local health = categories.health[category] or categories.health[#categories.health]
   local alive = true
   local destinationIndex = 1
 
@@ -65,9 +65,9 @@ local function new(category)
   end
 
   local function draw()
-    local red = categories.red[category] or categories.red[1]
-    local green = categories.green[category] or categories.green[1]
-    local blue = categories.blue[category] or categories.blue[1]
+    local red = categories.red[category] or categories.red[#categories.red]
+    local green = categories.green[category] or categories.green[#categories.green]
+    local blue = categories.blue[category] or categories.blue[#categories.blue]
 
     love.graphics.setColor(red, green, blue)
     love.graphics.circle("fill", x, y, radius)

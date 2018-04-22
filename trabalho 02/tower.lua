@@ -31,7 +31,7 @@ local function new(x, y, category)
 
   local function draw()
     if(debug) then
-      love.graphics.setColor(255, 0, 0, 0.5)
+      love.graphics.setColor(255, 0, 0, 0.3)
       --love.graphics.setColor(255, 0, 0, 100) --version < 11.0
       love.graphics.circle("fill", x, y, 70)
     end

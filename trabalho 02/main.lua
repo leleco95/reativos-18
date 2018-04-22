@@ -65,5 +65,7 @@ function love.mousepressed(x, y, button)
   --button == "l" --version < 0.10
   if button == 1 then
     player.createTower(x, y)
+  elseif button == 2 then
+    player.removeTower(x, y)
   end
 end

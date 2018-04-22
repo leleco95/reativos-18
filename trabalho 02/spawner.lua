@@ -4,7 +4,7 @@ local categories = require "category"
 local function new()
   local maxEnemies = 10
   local round = 1
-  local spawnDelay = categories.spawnDelay[round] or categories.spawnDelay[1]
+  local spawnDelay = categories.spawnDelay[round] or categories.spawnDelay[#categories.spawnDelay]
 
   local function spawnEnemies(self)
     for i=1, maxEnemies do
@@ -21,7 +21,7 @@ local function new()
 
   local function nextRound()
     round = round + 1
-    spawnDelay = categories.spawnDelay[round] or categories.spawnDelay[1]
+    spawnDelay = categories.spawnDelay[round] or categories.spawnDelay[#categories.spawnDelay]
   end
 
   local function update(self)

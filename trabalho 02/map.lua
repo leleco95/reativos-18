@@ -6,12 +6,16 @@ map.height = 25
 map.destinations = {
   {x = 425, y = love.graphics.getHeight()-100},
   {x = 600, y = love.graphics.getHeight()-100},
-  {x = 600, y = 300},
+  {x = 600, y = love.graphics.getHeight()-200},
+  {x = 500, y = love.graphics.getHeight()-200},
+  {x = 500, y = love.graphics.getHeight()},
+  {x = 100, y = love.graphics.getHeight()},
+  {x = 100, y = 0},
 }
 
 function map.generateRectangles()
   map.rectangles = {}
-  
+
   local x = map.startX
   local y = map.startY
 
