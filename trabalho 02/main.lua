@@ -57,7 +57,10 @@ end
 
 function love.keypressed(key)
   if key == '1' then
-    table.insert(enemies, enemy.new(1))
+    player.setSelectedTower(1)
+  end
+  if key == '2' then
+    player.setSelectedTower(2)
   end
 end
 
