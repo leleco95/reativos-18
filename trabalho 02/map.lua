@@ -1,16 +1,22 @@
 map = {}
-map.startX = 425
-map.startY = 0
+map.startX = 0
+map.startY = 300
 map.width = 25
 map.height = 25
 map.destinations = {
-  {x = 425, y = love.graphics.getHeight()-100},
-  {x = 600, y = love.graphics.getHeight()-100},
-  {x = 600, y = love.graphics.getHeight()-200},
-  {x = 500, y = love.graphics.getHeight()-200},
-  {x = 500, y = love.graphics.getHeight()},
-  {x = 100, y = love.graphics.getHeight()},
-  {x = 100, y = 0},
+  {x = 200, y = 300},
+  {x = 200, y = 200},
+  {x = 100, y = 200},
+  {x = 100, y = 300},
+  {x = 400, y = 300},
+  {x = 400, y = 200},
+  {x = 300, y = 200},
+  {x = 300, y = 300},
+  {x = 600, y = 300},
+  {x = 600, y = 200},
+  {x = 500, y = 200},
+  {x = 500, y = 300},
+  {x = love.graphics.getWidth(), y = 300},
 }
 
 function map.generateRectangles()

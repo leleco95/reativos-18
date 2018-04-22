@@ -7,7 +7,7 @@ local spawner = require "spawner"
 local towerCategories = require "towerCategory"
 
 function love.load()
-  debug = true
+  debug = false
 
   towers = {}
   enemies = {}
