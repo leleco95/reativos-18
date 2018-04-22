@@ -41,7 +41,7 @@ local function new(x, y, category)
     if(debug) then
       love.graphics.setColor(red, green, blue, 0.3)
       --love.graphics.setColor(255, 0, 0, 100) --version < 11.0
-      love.graphics.circle("fill", x, y, 70)
+      love.graphics.circle("fill", x, y, range)
     end
 
     love.graphics.setColor(red, green, blue)

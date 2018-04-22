@@ -58,7 +58,7 @@ end
 
 function love.keypressed(key)
   key = tonumber(key)
-  if key and key <= #towerCategories.range then
+  if key and key > 0 and key <= #towerCategories.range then
     player.setSelectedTower(key)
   end
 end
