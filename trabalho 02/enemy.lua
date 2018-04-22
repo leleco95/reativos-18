@@ -72,7 +72,7 @@ local function new(category)
 
     love.graphics.setColor(red, green, blue)
     love.graphics.circle("fill", x, y, radius)
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(1, 1, 1)
   end
 
   local function getX()

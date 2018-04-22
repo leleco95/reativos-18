@@ -50,9 +50,9 @@ local function new(x, y, target, damage)
   end
 
   local function draw()
-    love.graphics.setColor(0, 255, 0)
+    love.graphics.setColor(0, 1, 0)
     love.graphics.circle("fill", x, y, radius)
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(1, 1, 1)
   end
 
   local function getX()
