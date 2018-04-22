@@ -1,6 +1,6 @@
 local function new(x, y, target)
-  local speedX = 3
-  local speedY = 3
+  local speedX = 10
+  local speedY = 10
   local radius = 2
 
   local function move()

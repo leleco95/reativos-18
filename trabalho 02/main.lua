@@ -11,6 +11,7 @@ function love.load()
   towers = {}
   enemies = {}
   projectiles = {}
+
   map.generateRectangles()
   spawn = spawner.new()
 end
@@ -56,7 +57,7 @@ end
 
 function love.keypressed(key)
   if key == '1' then
-    table.insert(enemies, enemy.new(100))
+    table.insert(enemies, enemy.new(1))
   end
 end
 

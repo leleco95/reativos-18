@@ -1,24 +1,26 @@
+local categories = require "category"
+
 local function new(category)
   local x = map.startX
   local y = map.startY
-  local speedX = 2
-  local speedY = 2
-  local radius = 10
-  
-  local health = 3
+  local speedX = categories.speedX[category] or categories.speedX[1]
+  local speedY = categories.speedY[category] or categories.speedY[1]
+  local radius = categories.radius[category] or categories.radius[1]
+
+  local health = categories.health[category] or categories.health[1]
   local alive = true
   local destinationIndex = 1
 
   local function move(index)
     local destination = map.destinations[destinationIndex]
-    
+
     local directionX = 0
     if(x < destination.x) then
       directionX = 1
     elseif(x > destination.x) then
       directionX = -1
     end
-    
+
     local distance = math.abs(destination.x - x)
     if speedX > distance then
       x = x + distance * directionX
@@ -32,7 +34,7 @@ local function new(category)
     elseif(y > destination.y) then
       directionY = -1
     end
-    
+
     distance = math.abs(destination.y - y)
     if speedY > distance then
       y = y + distance * directionY
@@ -47,7 +49,7 @@ local function new(category)
       end
     end
   end
-  
+
   local function checkAlive(index)
     if not alive then
       table.remove(enemies, index)
@@ -63,7 +65,11 @@ local function new(category)
   end
 
   local function draw()
-    love.graphics.setColor(0, 0, 255)
+    local red = categories.red[category] or categories.red[1]
+    local green = categories.green[category] or categories.green[1]
+    local blue = categories.blue[category] or categories.blue[1]
+
+    love.graphics.setColor(red, green, blue)
     love.graphics.circle("fill", x, y, radius)
     love.graphics.setColor(255, 255, 255)
   end
@@ -75,7 +81,7 @@ local function new(category)
   local function getY()
     return y
   end
-  
+
   local function takeDamage(damage)
     health = health - damage
     if health <= 0 then
