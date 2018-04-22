@@ -94,13 +94,6 @@ local function new(category)
   }
 end
 
-local function spawner()
-  while true do
-    --todo
-  end
-end
-
 return {
   new = new,
-  spawner = coroutine.wrap(spawner)
 }

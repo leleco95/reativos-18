@@ -3,6 +3,7 @@ require "general"
 local player = require "player"
 local enemy = require "enemy"
 local projectile = require "projectile"
+local spawner = require "spawner"
 
 function love.load()
   debug = true
@@ -11,6 +12,7 @@ function love.load()
   enemies = {}
   projectiles = {}
   map.generateRectangles()
+  spawn = spawner.new()
 end
 
 function love.draw()
@@ -31,6 +33,10 @@ end
 
 function love.update(dt)
   local now = love.timer.getTime()
+
+  if now >= spawn.actionTime then
+    spawn:update()
+  end
 
   for k,v in pairs(towers) do
     if now >= v.actionTime then
