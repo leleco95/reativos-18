@@ -4,19 +4,20 @@ local button1 = 1
 local led1 = 3
 local lastPressed = 0
 
+local function post_callback(code, data)
+  if (code < 0) then
+    print("HTTP request failed :", code)
+    client:publish("wifi-notification", "error", 0, 0)
+  else
+    print(code, data)
+    client:publish("wifi-signal", data, 0, 0)
+  end
+end
+
 local function send_json(json)
-    http.post('https://www.googleapis.com/geolocation/v1/geolocate?key=KEY',
-    'Content-Type: application/json\r\n',
-    json,
-    function(code, data)
-      if (code < 0) then
-        print("HTTP request failed :", code)
-        client:publish("wifi-notification", "error", 0, 0)
-      else
-        print(code, data)
-        client:publish("wifi-signal", data, 0, 0)
-      end
-    end)
+  local url = 'https://www.googleapis.com/geolocation/v1/geolocate?key=CHAVE'
+  local content_type = 'Content-Type: application/json\r\n'
+  http.post(url, content_type, json, post_callback)
 end
 
 function get_wifi_info(name, info)
@@ -34,27 +35,23 @@ end
 
 function table_to_json(wifi_table)
   local json_array = "{ \n\"wifiAccessPoints\": [\n"
-  local count = 0
 
   for k,v in pairs(wifi_table) do
     print(k, v)
     json_array = json_array .. get_wifi_info(k, v)
-    count = count + 1
-    if count > 30 then
-        break
-    end
   end
+  json_array = json_array:sub(1, #json_array - 2) -- removing comma
 
-  json_array = json_array:sub(1, #json_array - 2) .. "\n]\n}"
+  json_array = json_array .. "\n]\n}"
   print(json_array)
   send_json(json_array)
 end
 
 local function button_pressed(_, time)
-    if time >= lastPressed + 200000 then
+    if time >= lastPressed + 1000000 then
         lastPressed = time
         print("button pressed")
-        --client:publish("wifi-notification", "gathering wifi data", 0, 0)
+        client:publish("wifi-notification", "gathering wifi data", 0, 0)
         wifi.sta.getap(table_to_json)
     end
 end
