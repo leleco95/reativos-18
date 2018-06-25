@@ -1,0 +1,110 @@
+#include "/home/terra/TerraNG/terra/TerraNet.defs"
+
+#define MSG_TIPO_REQUEST 0
+#define MSG_TIPO_ANSWER 1
+#define MSG_TIPO_CONTROL 2
+
+pktype messageType from radioMsg with
+    var short distance;
+    var short content;
+    var short finalTarget;
+end
+
+var messageType mensagem;
+
+var ushort nodeId = getNodeId();
+
+var short vValue;
+var short pValue;
+var short tValue;
+var short target = -1;
+var short requested = 0;
+var short controled = 0;
+
+var short distancia = 99;
+var ushort maisProximo = 0;
+
+par do
+    loop do
+        par/and do
+            if target == -1 then
+                emit REQ_TEMP();
+                tValue = await TEMP;
+                if tValue > 500 then
+                    emit REQ_PHOTO();
+                    pValue = await PHOTO;
+                    target = pValue / 10;
+                    mensagem.source = nodeId;
+                    mensagem.target = BROADCAST;
+                    mensagem.type = MSG_TIPO_REQUEST;
+                    mensagem.finalTarget = target;
+                    qPut(mensagem);
+                end
+            else
+                emit REQ_VOLTS();
+                vValue = await VOLTS;
+                mensagem.source = nodeId;
+                mensagem.target = maisProximo;
+                mensagem.type = MSG_TIPO_CONTROL;
+                mensagem.finalTarget = target;
+                mensagem.content = (vValue / 10) % 10;
+                qPut(mensagem);
+            end
+        with
+            await 10s;
+        end
+    end
+with
+    loop do
+        mensagem = await RECEIVE;
+        if mensagem.type == MSG_TIPO_ANSWER then
+            mensagem.distance = mensagem.distance + 1;
+            if mensagem.distance < distancia then
+                distancia = mensagem.distance;
+                maisProximo = mensagem.source;
+                mensagem.source = nodeId;
+                qPut(mensagem);
+            end
+        else/if mensagem.type == MSG_TIPO_REQUEST then
+            if mensagem.finalTarget == nodeId then
+                mensagem.source = nodeId;
+                mensagem.target = BROADCAST;
+                mensagem.type = MSG_TIPO_ANSWER;
+                mensagem.distance = 0;
+                qPut(mensagem);
+            else/if requested == 0 then
+                requested = 1;
+                qPut(mensagem);
+            end
+        else/if mensagem.type == MSG_TIPO_CONTROL then
+            if mensagem.finalTarget == nodeId then
+                emit LEDS(mensagem.content);
+            else
+                mensagem.target = maisProximo;
+                qPut(mensagem);
+            end
+        end
+    end
+with
+    loop do
+        await Q_READY;
+        loop do
+            if qSize() == 0 then break; end
+            qGet(mensagem);
+            if mensagem.target == BROADCAST then
+                emit SEND(mensagem);
+                await SEND_DONE;
+            else
+                loop i, 10 do
+                    // faz 10 tentativas de enviar antes de desistir
+                    var ubyte ack;
+                    emit SEND_ACK(mensagem);
+                    ack = await SEND_DONE_ACK;
+                    if ack == TRUE then break; end
+                    await (100 + random()/100)ms;
+                    // tempo para outros nós transmitirem
+                end
+            end
+        end
+    end
+end
